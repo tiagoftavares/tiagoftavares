@@ -57,7 +57,13 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const skillProgress = entry.target.querySelector('.skill-progress');
             if (skillProgress) {
-                skillProgress.style.width = skillProgress.parentElement.parentElement.getAttribute('data-width') || '80%';
+                // Pega a largura já definida no inline style
+                const targetWidth = skillProgress.style.width;
+                // Anima a partir de 0
+                skillProgress.style.width = '0';
+                setTimeout(() => {
+                    skillProgress.style.width = targetWidth;
+                }, 100);
             }
             observer.unobserve(entry.target);
         }
