@@ -69,14 +69,14 @@
 }
 
 .article-content section {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .article-content h2 {
     font-size: 28px;
     color: var(--dark-color);
-    margin-bottom: 10px;
-    margin-top: 15px;
+    margin-bottom: 8px;
+    margin-top: 10px;
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: 6px;
 }
@@ -84,12 +84,12 @@
 .article-content h3 {
     font-size: 20px;
     color: var(--dark-color);
-    margin-bottom: 15px;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-top: 12px;
 }
 
 .article-content p {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     font-size: 16px;
 }
 
@@ -105,11 +105,11 @@
 
 .article-content ul {
     margin-left: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .article-content li {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     font-size: 16px;
 }
 

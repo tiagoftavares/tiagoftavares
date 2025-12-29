@@ -34,34 +34,71 @@ categoryLinks.forEach(link => {
 });
 
 // ============================================
-// NEWSLETTER FORM
+// NEWSLETTER FORM WITH EMAILJS
 // ============================================
 
-const newsletterForm = document.querySelector('.newsletter-form');
-
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const email = newsletterForm.querySelector('input[type="email"]').value;
-        const button = newsletterForm.querySelector('button');
-        const originalText = button.innerHTML;
-        
-        // Show success message
-        button.innerHTML = '<i class="fas fa-check"></i> Inscrito!';
-        button.style.background = 'var(--success-color)';
-        
-        // Reset after 3 seconds
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '';
-            newsletterForm.reset();
-        }, 3000);
-        
-        // Here you would send the email to your backend
-        console.log('Email inscrito:', email);
-    });
-}
+// Carregar EmailJS dinamicamente
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js';
+script.onload = () => {
+    // Inicializar EmailJS com sua Public Key
+    // IMPORTANTE: Substitua 'YOUR_PUBLIC_KEY' pela sua chave pública do EmailJS
+    // Para configurar: https://www.emailjs.com/
+    emailjs.init('YOUR_PUBLIC_KEY');
+    
+    const newsletterForm = document.querySelector('.newsletter-form');
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = newsletterForm.querySelector('input[type="email"]').value;
+            const button = newsletterForm.querySelector('button');
+            const originalText = button.innerHTML;
+            
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inscrevendo...';
+            button.disabled = true;
+            
+            // Enviar email via EmailJS
+            emailjs.send('service_newsletter', 'template_newsletter', {
+                to_email: email,
+                subscriber_email: email,
+                message: 'Obrigado por se inscrever em nossa newsletter! Você receberá artigos e insights sobre Auditoria Interna e GRC.'
+            })
+            .then(() => {
+                // Show success message
+                button.innerHTML = '<i class="fas fa-check"></i> Inscrito!';
+                button.style.background = 'var(--success-color)';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                    button.disabled = false;
+                    newsletterForm.reset();
+                }, 3000);
+                
+                console.log('Email inscrito com sucesso:', email);
+            })
+            .catch((error) => {
+                // Show error message
+                button.innerHTML = '<i class="fas fa-exclamation-circle"></i> Erro';
+                button.style.background = '#dc3545';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                    button.disabled = false;
+                }, 3000);
+                
+                console.error('Erro ao enviar email:', error);
+            });
+        });
+    }
+};
+document.head.appendChild(script);
 
 // ============================================
 // SMOOTH SCROLL FOR ANCHOR LINKS

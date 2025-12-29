@@ -133,7 +133,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 document.addEventListener('DOMContentLoaded', () => {
     calculateReadingTime();
-    generateTableOfContents();
+    // generateTableOfContents(); // Comentado: índice removido conforme solicitado
     highlightCodeBlocks();
 });
 
